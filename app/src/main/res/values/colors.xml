@@ -3,4 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="textAlizarinCrimson">#E93323</color>
+    <color name="textFern">#5CB559</color>
+    <color name="textRoman">#DD5E66</color>
+    <color name="textMineShaft">#212121</color>
+    <color name="textBoulder">#757575</color>
+    <color name="backgoundPictonBlue">#4EACEA</color>
+    <color name="backgroundAthensGray">#EFEFF4</color>
+    <color name="backgroundWhite">#FFFFFF</color>
 </resources>
