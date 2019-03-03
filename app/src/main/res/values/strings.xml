@@ -2,4 +2,16 @@
     <string name="app_name">vicuatui</string>
     <string name="tab_1__section_1__text_left">Số tiền</string>
     <string name="tab_1__section_1__text_right">Chọn mẫu</string>
+    <string name="tab_1__section_1__drop_down_hint">Chọn hạng mục</string>
+    <string-array name="tab_1__section_1__drop_down">
+        <item>Ăn uống</item>
+        <item>Dịch vụ sinh hoạt</item>
+        <item>Đi lại</item>
+        <item>Trang phục</item>
+        <item>Nhà cửa</item>
+        <item>Hưởng thụ</item>
+        <item>Con cái</item>
+        <item>Phát triển bản thân</item>
+        <item>Sức khỏe</item>
+    </string-array>
 </resources>

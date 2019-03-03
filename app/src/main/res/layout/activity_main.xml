@@ -75,17 +75,15 @@
         android:weightSum="4"
         android:orientation="vertical"
         >
-        <TextView
+
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Chọn hạng mục"
-            android:textSize="36sp"
             android:gravity="center_vertical"
-            android:textColor="@color/textAlizarinCrimson"
-            >
-        </TextView>
-
+            android:entries="@array/tab_1__section_1__drop_down"
+            android:prompt="@string/tab_1__section_1__drop_down_hint">
+        </Spinner>
 
         <EditText
             android:layout_width="match_parent"
@@ -93,33 +91,13 @@
             android:layout_weight="1"
             android:hint="Diễn giải"
             />
-        <TextView
+        <DatePicker
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Hôm nay - 23/02/2019"
-            android:textSize="24sp"
-            android:gravity="center_vertical"
-            android:textColor="@color/textBlack"
-            >
-        </TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Mua sắm"
-            android:textSize="24sp"
-            android:gravity="center_vertical"
-            android:textColor="@color/textBlack"
-            >
-        </TextView>
+            android:layout_weight="2">
+        </DatePicker>
     </LinearLayout>
 
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="4"-->
-        <!--android:background="@color/colorAccent"></View>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
