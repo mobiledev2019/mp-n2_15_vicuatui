@@ -14,4 +14,5 @@
         <item>Phát triển bản thân</item>
         <item>Sức khỏe</item>
     </string-array>
+    <string name="date_picker">datePicker</string>
 </resources>
