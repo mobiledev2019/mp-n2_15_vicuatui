@@ -15,4 +15,9 @@
         <item>Sức khỏe</item>
     </string-array>
     <string name="date_picker">datePicker</string>
+    <string name="tab_1__section_1_textarea">Diễn giải</string>
+    <string name="tab_1__section_1_date">Date</string>
+    <string name="tab_1__section_2_button_1">Thêm chi tiết</string>
+    <string name="tab_1__section_2_button_2">Ghi</string>
+    <string name="tab_1__section_2_button_3">Scan hóa đơn (Beta)</string>
 </resources>

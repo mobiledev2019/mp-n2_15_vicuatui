@@ -89,13 +89,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:hint="Diễn giải"
+            android:hint="@string/tab_1__section_1_textarea"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Date"
+            android:text="@string/tab_1__section_1_date"
             android:onClick="showDatePicker"/>
     </LinearLayout>
 
@@ -110,14 +110,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Thêm chi tiết"
+            android:text="@string/tab_1__section_2_button_1"
             android:textColor="@color/textPictonBlue"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Ghi"
+            android:text="@string/tab_1__section_2_button_2"
             android:textColor="@color/textWhite"
             android:background="@color/textPictonBlue"
             />
@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Scan hóa đơn (Beta)"
+            android:text="@string/tab_1__section_2_button_3"
             android:gravity="center"
             android:textColor="@color/textPictonBlue"/>
     </LinearLayout>
