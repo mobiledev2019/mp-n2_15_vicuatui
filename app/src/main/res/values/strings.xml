@@ -20,4 +20,13 @@
     <string name="tab_1__section_2_button_1">Thêm chi tiết</string>
     <string name="tab_1__section_2_button_2">Ghi</string>
     <string name="tab_1__section_2_button_3">Scan hóa đơn (Beta)</string>
+    <string name="Home">home</string>
+    <string name="nav_first">Tổng quan</string>
+    <string name="nav_second">Tài Khoản</string>
+    <string name="nav_third"/>
+    <string name="nav_fourth">Hạn mức chi</string>
+    <string name="nav_fifth">Cá nhân</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
