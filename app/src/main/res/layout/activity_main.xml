@@ -76,27 +76,68 @@
         android:orientation="vertical"
         >
 
-        <Spinner
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:entries="@array/tab_1__section_1__drop_down"
-            android:prompt="@string/tab_1__section_1__drop_down_hint">
-        </Spinner>
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/section_1__icon_1"/>
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:entries="@array/tab_1__section_1__drop_down"
+                android:prompt="@string/tab_1__section_1__drop_down_hint">
+            </Spinner>
+        </LinearLayout>
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:hint="@string/tab_1__section_1_textarea"
-            />
-        <Button
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/section_1__icon_2"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:hint="@string/tab_1__section_1_textarea"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="@string/tab_1__section_1_date"
-            android:onClick="showDatePicker"/>
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/tab_1__section_1_date"
+                android:onClick="showDatePicker"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:id="@+id/section_1__date"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
