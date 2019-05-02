@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_first"
+        android:icon="@drawable/baseline_home_black_24dp"
+        android:title="@string/nav_first" />
+    <item
+        android:id="@+id/nav_second"
+        android:icon="@drawable/baseline_account_balance_wallet_black_24dp"
+        android:title="@string/nav_second" />
+    <item
+        android:id="@+id/nav_third"
+        android:icon="@drawable/baseline_add_circle_black_24dp"
+        android:title="@string/nav_third" />
+    <item
+        android:id="@+id/nav_fourth"
+        android:icon="@drawable/baseline_monetization_on_black_24dp"
+        android:title="@string/nav_fourth" />
+    <item
+        android:id="@+id/nav_fifth"
+        android:icon="@drawable/baseline_account_box_black_24dp"
+        android:title="@string/nav_fifth" />
+</menu>
