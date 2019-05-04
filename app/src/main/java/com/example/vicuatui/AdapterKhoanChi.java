@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,16 +64,15 @@ public class AdapterKhoanChi extends BaseAdapter {
         Bitmap bmHinhDaiDien = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
         img_hang_muc.setImageBitmap(bmHinhDaiDien);
 
-//        btn_sua.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, UpdateActivity.class);
-//                intent.putExtra("ID", khoanChi.ID);
-//                context.startActivity(intent);
-//            }
-//        });
+        btn_sua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThirdFragment thirdFragment = new ThirdFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("ID", khoanChi.ID);
+                thirdFragment.setArguments(bundle);
+            }
+        });
         return row;
     }
-
-
 }

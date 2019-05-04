@@ -48,15 +48,15 @@
             android:weightSum="10">
 
             <EditText
+                android:id="@+id/third_fragment__txt_so_tien"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
-                android:hint="0"
-                android:textColorHint="@color/textRoman"
-                android:textSize="48sp"
                 android:gravity="end"
+                android:hint="0"
                 android:inputType="number"
-                />
+                android:textColorHint="@color/textRoman"
+                android:textSize="48sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -88,14 +88,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/section_1__icon_1"/>
+
             <Spinner
+                android:id="@+id/spinner_hang_muc"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:gravity="center_vertical"
                 android:entries="@array/tab_1__section_1__drop_down"
-                android:prompt="@string/tab_1__section_1__drop_down_hint">
-            </Spinner>
+                android:gravity="center_vertical"
+                android:prompt="@string/tab_1__section_1__drop_down_hint"></Spinner>
         </LinearLayout>
 
         <LinearLayout
@@ -111,11 +112,11 @@
                 android:src="@drawable/section_1__icon_2"/>
 
             <EditText
+                android:id="@+id/third_fragment__txt_dien_giai"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:hint="@string/tab_1__section_1_textarea"
-                />
+                android:hint="@string/tab_1__section_1_textarea" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,10 +134,10 @@
                 />
 
             <TextView
+                android:id="@+id/third_fragment__txt_ngay_thang"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:id="@+id/section_1__date"
                 tools:text="@tools:sample/date/ddmmyy" />
         </LinearLayout>
 
