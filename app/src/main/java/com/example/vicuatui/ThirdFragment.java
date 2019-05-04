@@ -121,9 +121,9 @@ public class ThirdFragment extends Fragment {
                         updateData();
                         Toast.makeText(getActivity(), "Sửa thành công", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        saveData();
-                    }
+                }
+                else {
+                    saveData();
                 }
             }
         });

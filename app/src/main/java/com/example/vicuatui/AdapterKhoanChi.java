@@ -1,8 +1,12 @@
 package com.example.vicuatui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -78,6 +82,48 @@ public class AdapterKhoanChi extends BaseAdapter {
                 thirdFragment.setArguments(bundle);
             }
         });
+
+        btn_xoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setIcon(android.R.drawable.ic_delete);
+                builder.setTitle("Xác nhận xóa");
+                builder.setMessage("Bạn có chắc chắn muốn xóa khoản chi này?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteData(khoanChi.ID);
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         return row;
+    }
+
+    private void deleteData(int idKhoanChi){
+        SQLiteDatabase database = Database.initDatabase(context, "VicuatuiBDv1.db");
+        database.delete("KhoanChi", "ID = ?", new String[]{idKhoanChi + ""});
+        list.clear();
+        Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            double soTien = cursor.getDouble(1);
+            String hangMuc = cursor.getString(2);
+            String dienGiai = cursor.getString(3);
+            String ngayThang = cursor.getString(4);
+            byte[] anhHangMuc = cursor.getBlob(5);
+
+            list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+        }
+        notifyDataSetChanged();
     }
 }
