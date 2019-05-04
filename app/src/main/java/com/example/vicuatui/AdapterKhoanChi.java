@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,15 +63,18 @@ public class AdapterKhoanChi extends BaseAdapter {
         txt_ngay_thang.setText(khoanChi.ngayThang);
         txt_so_tien.setText(khoanChi.soTien + "");
 
-        Bitmap bmHinhDaiDien = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
-        img_hang_muc.setImageBitmap(bmHinhDaiDien);
+//        Bitmap bmHinhDaiDien = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
+//        img_hang_muc.setImageBitmap(bmHinhDaiDien);
 
         btn_sua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ThirdFragment thirdFragment = new ThirdFragment();
+                FragmentManager ft = ((AppCompatActivity)context).getSupportFragmentManager();
+                ft.beginTransaction().replace(R.id.main_frame, thirdFragment).commit();
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", khoanChi.ID);
+                bundle.putString("Edit", "true");
                 thirdFragment.setArguments(bundle);
             }
         });
