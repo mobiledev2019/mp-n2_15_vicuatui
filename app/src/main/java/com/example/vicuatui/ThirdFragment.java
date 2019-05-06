@@ -1,6 +1,7 @@
 package com.example.vicuatui;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -9,7 +10,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,10 +22,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -33,12 +41,15 @@ import java.util.Calendar;
  */
 public class ThirdFragment extends Fragment {
     final String DATABASE_NAME = "VicuatuiBDv1.db";
+    final int REQUEST_TAKE_PHOTO = 123;
     int id = -1;
     Bundle bundle;
     int mDay, mMonth, mYear;
 
     EditText txt_dien_giai, txt_so_tien;
     EditText txt_ngay_thang;
+    TextView txvAddBill;
+    ImageView imgBill;
     Spinner spinner_hang_muc;
     Button btnGhi, btnDatePicker;
 
@@ -62,13 +73,14 @@ public class ThirdFragment extends Fragment {
         String hangMuc = spinner_hang_muc.getSelectedItem().toString();
         String dienGiai = txt_dien_giai.getText().toString();
         String ngayThang = txt_ngay_thang.getText().toString();
-//        byte[] anhHangMuc = cursor.getBlob(5);
+        byte[] anh = getbyteArrayFromImageView(imgBill);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("SoTien", soTien);
         contentValues.put("HangMuc", hangMuc);
         contentValues.put("DienGiai", dienGiai);
         contentValues.put("NgayThang", ngayThang);
+        contentValues.put("Anh", anh);
 
         SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
         database.insert("KhoanChi", null, contentValues);
@@ -88,10 +100,13 @@ public class ThirdFragment extends Fragment {
             String dienGiai = cursor.getString(3);
             String ngayThang = cursor.getString(4);
             byte[] anhHangMuc = cursor.getBlob(5);
+
             txt_so_tien.setText(soTien + "");
             spinner_hang_muc.setSelection(findItemSpinner(hangMuc));
             txt_dien_giai.setText(dienGiai);
             txt_ngay_thang.setText(ngayThang);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(anhHangMuc, 0, anhHangMuc.length);
+            imgBill.setImageBitmap(bitmap);
         }
     }
 
@@ -100,13 +115,14 @@ public class ThirdFragment extends Fragment {
         String hangMuc = spinner_hang_muc.getSelectedItem().toString();
         String dienGiai = txt_dien_giai.getText().toString();
         String ngayThang = txt_ngay_thang.getText().toString();
-//        byte[] anhHangMuc = cursor.getBlob(5);
+        byte[] anh = getbyteArrayFromImageView(imgBill);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("SoTien", soTien);
         contentValues.put("HangMuc", hangMuc);
         contentValues.put("DienGiai", dienGiai);
         contentValues.put("NgayThang", ngayThang);
+        contentValues.put("Anh", anh);
 
         SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
         database.update("KhoanChi", contentValues, "id = ?", new String[] { id + ""});
@@ -119,6 +135,8 @@ public class ThirdFragment extends Fragment {
         txt_ngay_thang = (EditText) view.findViewById(R.id.third_fragment__txt_ngay_thang);
         btnGhi = (Button) view.findViewById(R.id.third_fragment__btn_ghi);
         btnDatePicker = (Button) view.findViewById(R.id.third_fragment__btn_date_picker);
+        txvAddBill = (TextView) view.findViewById(R.id.third_fragment__txv_add_bill);
+        imgBill = (ImageView) view.findViewById(R.id.third_fragment__img_bill);
 
         Calendar c = Calendar.getInstance();
         mDay = c.get(Calendar.DATE);
@@ -141,6 +159,13 @@ public class ThirdFragment extends Fragment {
                 }
             }
         });
+
+        txvAddBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
     }
 
     private int findItemSpinner(String string) {
@@ -161,5 +186,31 @@ public class ThirdFragment extends Fragment {
             }
         }
         return position;
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO){
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                imgBill.setImageBitmap(bitmap);
+            }
+        }
+    }
+
+    private byte[] getbyteArrayFromImageView(ImageView imgv){
+
+        BitmapDrawable drawable = (BitmapDrawable) imgv.getDrawable();
+        Bitmap bmp = drawable.getBitmap();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 }
