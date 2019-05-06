@@ -23,7 +23,7 @@
     <string name="Home">home</string>
     <string name="nav_first">Tổng quan</string>
     <string name="nav_second">Tài Khoản</string>
-    <string name="nav_third"/>
+    <string name="nav_third" />
     <string name="nav_fourth">Hạn mức chi</string>
     <string name="nav_fifth">Cá nhân</string>
 
