@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/img_hang_muc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             tools:src="@tools:sample/avatars" />
     </LinearLayout>
 
@@ -23,24 +23,32 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_hang_muc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"
             android:text="Hang Muc"/>
 
         <TextView
             android:id="@+id/txt_dien_giai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
             android:text="Dien Giai" />
 
         <TextView
             android:id="@+id/txt_ngay_thang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
             android:text="Ngay Thang" />
 
     </LinearLayout>
@@ -55,6 +63,9 @@
             android:id="@+id/txt_so_tien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
             android:text="So Tien" />
 
     </LinearLayout>
@@ -63,6 +74,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <Button
