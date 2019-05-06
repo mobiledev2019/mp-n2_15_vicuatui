@@ -1,6 +1,8 @@
 package com.example.vicuatui;
 
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,13 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 
 /**
@@ -30,11 +35,12 @@ public class ThirdFragment extends Fragment {
     final String DATABASE_NAME = "VicuatuiBDv1.db";
     int id = -1;
     Bundle bundle;
+    int mDay, mMonth, mYear;
 
     EditText txt_dien_giai, txt_so_tien;
-    TextView txt_ngay_thang;
+    EditText txt_ngay_thang;
     Spinner spinner_hang_muc;
-    Button btnGhi;
+    Button btnGhi, btnDatePicker;
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -110,8 +116,16 @@ public class ThirdFragment extends Fragment {
         txt_so_tien = (EditText) view.findViewById(R.id.third_fragment__txt_so_tien);
         spinner_hang_muc = (Spinner) view.findViewById(R.id.spinner_hang_muc);
         txt_dien_giai = (EditText) view.findViewById(R.id.third_fragment__txt_dien_giai);
-        txt_ngay_thang = (TextView) view.findViewById(R.id.third_fragment__txt_ngay_thang);
+        txt_ngay_thang = (EditText) view.findViewById(R.id.third_fragment__txt_ngay_thang);
         btnGhi = (Button) view.findViewById(R.id.third_fragment__btn_ghi);
+        btnDatePicker = (Button) view.findViewById(R.id.third_fragment__btn_date_picker);
+
+        Calendar c = Calendar.getInstance();
+        mDay = c.get(Calendar.DATE);
+        mMonth = c.get(Calendar.MONTH);
+        mYear = c.get(Calendar.YEAR);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        txt_ngay_thang.setText(sdf.format(c.getTime()));
 
         btnGhi.setOnClickListener(new View.OnClickListener() {
             @Override

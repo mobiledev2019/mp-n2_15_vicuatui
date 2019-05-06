@@ -116,6 +116,7 @@
             android:weightSum="4"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/third_fragment__btn_date_picker"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -123,7 +124,7 @@
                 android:onClick="showDatePicker"
                 />
 
-            <TextView
+            <EditText
                 android:id="@+id/third_fragment__txt_ngay_thang"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
