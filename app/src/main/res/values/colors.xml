@@ -8,6 +8,9 @@
     <color name="textRoman">#DD5E66</color>
     <color name="textMineShaft">#212121</color>
     <color name="textBoulder">#757575</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textBlack">#000000</color>
+    <color name="textPictonBlue">#4EACEA</color>
     <color name="backgoundPictonBlue">#4EACEA</color>
     <color name="backgroundAthensGray">#EFEFF4</color>
     <color name="backgroundWhite">#FFFFFF</color>
