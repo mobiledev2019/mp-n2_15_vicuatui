@@ -67,8 +67,8 @@ public class AdapterKhoanChi extends BaseAdapter {
         txt_ngay_thang.setText(khoanChi.ngayThang);
         txt_so_tien.setText(khoanChi.soTien + "");
 
-//        Bitmap bmHinhDaiDien = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
-//        img_hang_muc.setImageBitmap(bmHinhDaiDien);
+        Bitmap bmAnhHangMuc = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
+        img_hang_muc.setImageBitmap(bmAnhHangMuc);
 
         btn_sua.setOnClickListener(new View.OnClickListener() {
             @Override
