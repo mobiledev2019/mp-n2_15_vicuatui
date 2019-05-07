@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class SecondFragment extends Fragment {
     SQLiteDatabase database;
 
     ListView listView;
+    TextView txvTongTien;
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
 
@@ -48,6 +50,8 @@ public class SecondFragment extends Fragment {
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+        txvTongTien.setText(sum());
     }
 
     private void readData() {
@@ -65,5 +69,16 @@ public class SecondFragment extends Fragment {
             list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private String sum(){
+        double tongTien = 0;
+        SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
+        Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi", null);
+        while (cursor.moveToNext()) {
+            double soTien = cursor.getDouble(1);
+            tongTien += soTien;
+        }
+        return tongTien + "";
     }
 }
