@@ -138,6 +138,15 @@ public class ThirdFragment extends Fragment {
         txvAddBill = (TextView) view.findViewById(R.id.third_fragment__txv_add_bill);
         imgBill = (ImageView) view.findViewById(R.id.third_fragment__img_bill);
 
+        txt_so_tien.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(txt_so_tien.getText().length() < 5){
+                    txt_so_tien.setError("Must be 5 charater");
+                }
+            }
+        });
+
         Calendar c = Calendar.getInstance();
         mDay = c.get(Calendar.DATE);
         mMonth = c.get(Calendar.MONTH);
