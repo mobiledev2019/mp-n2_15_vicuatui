@@ -33,7 +33,7 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_marginTop="15dp"
-            android:text="Hang Muc"/>
+            android:text="Hạng Mức"/>
 
         <TextView
             android:id="@+id/txt_dien_giai"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="18sp"
-            android:text="Dien Giai" />
+            android:text="Diễn giải" />
 
         <TextView
             android:id="@+id/txt_ngay_thang"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="18sp"
-            android:text="Ngay Thang" />
+            android:text="Ngày Tháng" />
 
     </LinearLayout>
 
@@ -65,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            android:text="So Tien" />
+            android:textSize="25sp"
+            android:text="Số tiền" />
 
     </LinearLayout>
 
@@ -81,13 +81,13 @@
             android:id="@+id/btn_sua"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sua" />
+            android:text="Sửa" />
 
         <Button
             android:id="@+id/btn_xoa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xoa" />
+            android:text="Xóa" />
     </LinearLayout>
 
 </LinearLayout>

@@ -27,6 +27,15 @@
     <string name="nav_fourth">Hạn mức chi</string>
     <string name="nav_fifth">Cá nhân</string>
 
+    // add new
+    <string name="txt_so_tien">Cá nhân</string>
+    <string name="txt_dien_giai">Dien dai</string>
+    <string name="txt_ngay_thang">Cá nhân</string>
+
+    <string name="success">Thanh cong</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
