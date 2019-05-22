@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ThirdFragment"
@@ -173,23 +175,39 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="4">
-            <TextView
-                android:id="@+id/third_fragment__txv_add_bill"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@string/tab_1__section_2_button_3"
-                android:textColor="@color/textPictonBlue" />
 
             <ImageView
                 android:id="@+id/third_fragment__img_bill"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:paddingLeft="36dp"
+                android:paddingTop="16dp"
+                android:src="@drawable/camera_icon" />
+
+            <TextView
+                android:id="@+id/third_fragment__txv_add_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+
+                android:paddingTop="20dp"
+                android:text="@string/tab_1__section_2_button_3"
+                android:textColor="@color/textPictonBlue" />
+            <ImageView
+                android:id="@+id/third_fragment_img_folder"
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:paddingLeft="36dp"
+                android:paddingTop="16dp"
+                android:src="@drawable/icon_folder" />
+
+
         </LinearLayout>
         <Button
+            android:paddingLeft="-3dp"
             android:id="@+id/third_fragment__btn_ghi"
             android:layout_width="match_parent"
             android:layout_height="0dp"
