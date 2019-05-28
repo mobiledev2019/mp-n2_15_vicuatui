@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseTest extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "auth.db"; // DATABASE NAME
+    public static final String DATABASE_NAME = "VicuatuiBDv1.db"; // DATABASE NAME
     public static final int DATABASE_VERSION = 1; //DATABASE VERSION
     public static final String TABLE_USERS = "users"; //TABLE NAME
 

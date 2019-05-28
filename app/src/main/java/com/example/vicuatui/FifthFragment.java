@@ -76,7 +76,7 @@ public class FifthFragment extends Fragment {
 //            public void onClick(View view) {
 ////                if (validate()) {
 //                    String UserName = "huyhuy";
-//                    String Email = "quangquang@gmail.com";
+//                    //String Email = "quangquang@gmail.com";
 //                    String Password = "123456";
 //
 //                    // Query check email
@@ -90,9 +90,9 @@ public class FifthFragment extends Fragment {
 //                    }else{
 //
 //                        SQLiteDatabase query = dataHelper.getWritableDatabase();
-//                        query.execSQL("insert into users(username, email, password) values('" +
+//                        query.execSQL("insert into users(username, password) values('" +
 //                                UserName + "','" +
-//                                Email + "','" +
+//
 //                                Password + "')");
 //                        Toast.makeText(getActivity(), "User created successfully! Please Login",
 //                                Toast.LENGTH_LONG).show();
