@@ -5,12 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +33,17 @@ public class SecondFragment extends Fragment {
     TextView txvTongTien;
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
+    public TextView txtDienGiai , txtNgayThang , txtSoTien , txtHangMuc;
 
     public SecondFragment() {
         // Required empty public constructor
+    }
+
+    public void Second(View view){
+        txtHangMuc = (TextView)view.findViewById(R.id.txt_hang_muc);
+        txtDienGiai = (TextView)view.findViewById(R.id.txt_dien_giai);
+        txtNgayThang = (TextView)view.findViewById(R.id.txt_ngay_thang);
+        txtSoTien = (TextView)view.findViewById(R.id.txt_so_tien);
     }
 
     @Override
@@ -56,7 +67,7 @@ public class SecondFragment extends Fragment {
 
     private void readData() {
         database = (SQLiteDatabase) Database.initDatabase(getActivity(), DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi  WHERE ID = " + 1 , null);
         list.clear();
         for(int i=0; i<cursor.getCount(); i++) {
             cursor.moveToPosition(i);
@@ -82,3 +93,13 @@ public class SecondFragment extends Fragment {
         return tongTien + "";
     }
 }
+
+////    public TextView txtDienGiai, txtNgayThang, txtSoTien, txtHangMuc;
+////txtHangMuc =(TextView)view.findViewById(R.id.txt_hang_muc);
+////        txtDienGiai =(TextView)view.findViewById(R.id.txt_dien_giai);
+////        txtNgayThang =(TextView)view.findViewById(R.id.txt_ngay_thang);
+////        txtSoTien =(TextView)view.findViewById(R.id.txt_so_tien);
+
+
+
+
