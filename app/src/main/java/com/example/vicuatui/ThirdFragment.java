@@ -14,8 +14,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -35,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import static android.content.ContentValues.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +50,7 @@ import java.util.Calendar;
 public class ThirdFragment extends Fragment {
     final String DATABASE_NAME = "VicuatuiBDv1.db";
     final int REQUEST_TAKE_PHOTO = 123;
+    final int REQUEST_CODE_FOLDER = 456;
     int id = -1;
     Bundle bundle;
     int mDay, mMonth, mYear;
@@ -49,9 +58,15 @@ public class ThirdFragment extends Fragment {
     EditText txt_dien_giai, txt_so_tien;
     EditText txt_ngay_thang;
     TextView txvAddBill;
-    ImageView imgBill;
+    ImageView imgBill , defaultImage;
+    ImageView imgFolder;
     Spinner spinner_hang_muc;
     Button btnGhi, btnDatePicker;
+    private TextInputLayout inputLayoutDienDai, inputLayoutTien, inputLayoutNgayThang;
+
+    AwesomeValidation awesomeValidation;
+
+
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -62,6 +77,8 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_third, container, false);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
         addControls(view);
         bundle = this.getArguments();
         editData();
@@ -73,6 +90,7 @@ public class ThirdFragment extends Fragment {
         String hangMuc = spinner_hang_muc.getSelectedItem().toString();
         String dienGiai = txt_dien_giai.getText().toString();
         String ngayThang = txt_ngay_thang.getText().toString();
+
         byte[] anh = getbyteArrayFromImageView(imgBill);
 
         ContentValues contentValues = new ContentValues();
@@ -80,11 +98,23 @@ public class ThirdFragment extends Fragment {
         contentValues.put("HangMuc", hangMuc);
         contentValues.put("DienGiai", dienGiai);
         contentValues.put("NgayThang", ngayThang);
-        contentValues.put("Anh", anh);
+        //contentValues.put("Anh", anh);
+        if (anh.length > 0 || anh != null){
+            Log.d(TAG , "LOG HERE2");
+            contentValues.put("Anh", anh);
+
+        }
+        else {
+            Log.d(TAG , "LOG HERE");
+        }
 
         SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
         database.insert("KhoanChi", null, contentValues);
         Toast.makeText(getActivity(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+        txt_dien_giai.setText("");
+        txt_ngay_thang.setText("");
+        txt_so_tien.setText("");
+        imgBill.setImageBitmap(null);
     }
 
     //TODO: get  and update data in fragment
@@ -111,6 +141,7 @@ public class ThirdFragment extends Fragment {
     }
 
     private void updateData() {
+        Log.d(TAG , "LOG HERE");
         double soTien = (double) Double.parseDouble(txt_so_tien.getText() + "");
         String hangMuc = spinner_hang_muc.getSelectedItem().toString();
         String dienGiai = txt_dien_giai.getText().toString();
@@ -120,9 +151,17 @@ public class ThirdFragment extends Fragment {
         ContentValues contentValues = new ContentValues();
         contentValues.put("SoTien", soTien);
         contentValues.put("HangMuc", hangMuc);
-        contentValues.put("DienGiai", dienGiai);
+        //contentValues.put("DienGiai", dienGiai);
         contentValues.put("NgayThang", ngayThang);
-        contentValues.put("Anh", anh);
+        if (anh.length > 0 || anh != null){
+            Log.d(TAG , "LOG HERE2" + anh.length + "LENG");
+            contentValues.put("Anh", anh);
+
+        }
+        else {
+            Log.d(TAG , "LOG HERE");
+        }
+
 
         SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
         database.update("KhoanChi", contentValues, "id = ?", new String[] { id + ""});
@@ -137,6 +176,10 @@ public class ThirdFragment extends Fragment {
         btnDatePicker = (Button) view.findViewById(R.id.third_fragment__btn_date_picker);
         txvAddBill = (TextView) view.findViewById(R.id.third_fragment__txv_add_bill);
         imgBill = (ImageView) view.findViewById(R.id.third_fragment__img_bill);
+        inputLayoutNgayThang = (TextInputLayout) view.findViewById(R.id.inputLayoutNgayThang);
+        inputLayoutTien = (TextInputLayout) view.findViewById(R.id.inputLayoutTien);
+        inputLayoutDienDai = (TextInputLayout) view.findViewById(R.id.inputLayoutDienGiai);
+        imgFolder = (ImageView) view.findViewById(R.id.third_fragment_img_folder);
 
         Calendar c = Calendar.getInstance();
         mDay = c.get(Calendar.DATE);
@@ -148,16 +191,19 @@ public class ThirdFragment extends Fragment {
         btnGhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bundle !=  null) {
-                    if (bundle.getString("Edit") == "true") {
-                        updateData();
-                        Toast.makeText(getActivity(), "Sửa thành công", Toast.LENGTH_SHORT).show();
-                    }
+                    if (validate()){
+                        if (bundle !=  null) {
+                            if (bundle.getString("Edit") == "true") {
+                                updateData();
+                                Toast.makeText(getActivity(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            saveData();
+                        }
+                            Toast.makeText(getActivity() , "Data receove success" , Toast.LENGTH_SHORT).show();
+                        }
                 }
-                else {
-                    saveData();
-                }
-            }
         });
 
         txvAddBill.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +212,46 @@ public class ThirdFragment extends Fragment {
                 takePhoto();
             }
         });
+        imgFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upLoadFromFolder();
+            }
+        });
+
+
+
+    }
+
+    private boolean validate() {
+
+        boolean isValid = true;
+
+        if (txt_dien_giai.getText().toString().isEmpty()) {
+            inputLayoutDienDai.setError("Không được để trống");
+            isValid = false;
+        } else {
+            inputLayoutDienDai.setErrorEnabled(false);
+        }
+
+        if (txt_so_tien.getText().toString().isEmpty() || txt_so_tien.getText().toString().trim().length() < 3 || txt_so_tien.getText().toString().trim().length() >12) {
+            inputLayoutTien.setError("Số tiền không hợp lệ");
+            isValid = false;
+        } else {
+            inputLayoutTien.setErrorEnabled(false);
+        }
+
+        if (txt_ngay_thang.getText().toString().trim().isEmpty() ) {
+            inputLayoutNgayThang.setError("Ngày tháng không hợp lệ");
+            isValid = false;
+        } else {
+            inputLayoutNgayThang.setErrorEnabled(false);
+        }
+
+        if (isValid) {
+            Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();
+        }
+        return isValid;
     }
 
     private int findItemSpinner(String string) {
@@ -193,6 +279,13 @@ public class ThirdFragment extends Fragment {
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 
+    private void upLoadFromFolder(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent , REQUEST_CODE_FOLDER);
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
@@ -200,6 +293,18 @@ public class ThirdFragment extends Fragment {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 imgBill.setImageBitmap(bitmap);
             }
+        }
+        if (requestCode == REQUEST_CODE_FOLDER && resultCode == Activity.RESULT_OK && data !=null){
+            Uri uri = data.getData();
+            try {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imgBill.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
         }
     }
 
