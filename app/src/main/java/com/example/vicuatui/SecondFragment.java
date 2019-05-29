@@ -7,9 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import static android.graphics.Color.*;
+import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -25,11 +29,13 @@ import static android.graphics.Color.*;
 public class SecondFragment extends Fragment {
     final String DATABASE_NAME = "VicuatuiBDv1.db";
     SQLiteDatabase database;
-
+    LinearLayout linearLayoutSum;
     ListView listView;
     TextView txvTongTien;
+    TextView textViewChiTieu;
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
+    FifthFragment fifthFragment;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -40,8 +46,19 @@ public class SecondFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        addControl(view);
-        readData();
+        fifthFragment = new FifthFragment();
+        textViewChiTieu = (TextView) view.findViewById(R.id.textViewChiTieu);
+
+        Log.v(TAG , "checkUser" + fifthFragment.getCheckUser());
+        if (fifthFragment.getCheckUser() == 1){
+            addControl(view);
+            readData();
+        }
+        else {
+            textViewChiTieu.setText("Xin vui lòng đăng nhập");
+        }
+
+
         return view;
     }
 
@@ -51,7 +68,10 @@ public class SecondFragment extends Fragment {
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
         txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+        linearLayoutSum = (LinearLayout) view.findViewById(R.id.layout_sum);
         txvTongTien.setText(sum());
+
+
     }
 
     private void readData() {

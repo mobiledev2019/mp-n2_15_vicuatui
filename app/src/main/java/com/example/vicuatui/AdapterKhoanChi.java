@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class AdapterKhoanChi extends BaseAdapter {
     Activity context;
     ArrayList list;
+    FifthFragment fifthFragment;
 
     public AdapterKhoanChi(Activity context, ArrayList list) {
         this.context = context;

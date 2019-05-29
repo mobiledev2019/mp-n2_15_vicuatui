@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.Constraints;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,17 +34,18 @@ import static android.content.ContentValues.TAG;
  * A simple {@link Fragment} subclass.
  */
 public class FifthFragment extends Fragment {
-    TextView textViewDangNhap;
-    int checkView = 0;
+    TextView textViewDangNhap , textViewDangXuat;
+    ImageView imageView3;
+    static int checkView = 0;
     String userName;
     Cursor cursor; //Declaration Cursor
     EditText username, password; //Declaration Edit
     TextInputLayout txtUsername, txtPassword; //Declaration TextInputLayout
     Button buttonLogin; //Declaration Button
     SharedPreferences pref,sharedpreferences;    //Declaration SharedPreferences
-
     DatabaseTest dataHelper; //Declaration SqliteHelper
     TextView txtRegister;
+    public static int checkUser = 0;
 
     public FifthFragment() {
         // Required empty public constructor
@@ -57,60 +60,68 @@ public class FifthFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_fifth, container, false);
 
         textViewDangNhap = (TextView)view.findViewById(R.id.textViewDangNhap);
+        textViewDangXuat = (TextView)view.findViewById(R.id.textViewDangXuat);
+        imageView3 = (ImageView)view.findViewById(R.id.imageView3);
+
+
+        if (checkView == 0){
+            textViewDangXuat.setVisibility(View.INVISIBLE);
+            imageView3.setVisibility(View.INVISIBLE);
+        }
+        else {
+            textViewDangXuat.setVisibility(View.VISIBLE);
+            imageView3.setVisibility(View.VISIBLE);
+        }
+
         dataHelper = new DatabaseTest(getContext());
         if (checkView == 1){
             textViewDangNhap.setText("Xin chào :" + userName);
         }
+        else {
+            textViewDangNhap.setText("Đăng Nhập Hệ Thống");
+        }
 
         Log.v(TAG, "cjeck " + checkView);
-
-        textViewDangNhap.setOnClickListener(new View.OnClickListener() {
+        textViewDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogLogin();
+
+                //User Logged in Successfully Launch You home screen activity
+
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+                if (getCheckUser() == 1){
+                    Toast.makeText(getActivity() , "Đăng xuất thành công " , Toast.LENGTH_SHORT).show();
+                    checkView = 0;
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+                }
+                else {
+                    Toast.makeText(getActivity() , "Xin vui lòng đăng nhập " , Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
-        // register de sau lam
-//        textViewDangNhap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                if (validate()) {
-//                    String UserName = "huyhuy";
-//                    //String Email = "quangquang@gmail.com";
-//                    String Password = "123456";
-//
-//                    // Query check email
-//                    SQLiteDatabase db = dataHelper.getReadableDatabase();
-//                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'",null);
-//                    cursor.moveToFirst();
-//                    if (cursor.getCount()>0) {
-//                        //Email exists with email input provided so show error user already exist
-//                        Toast.makeText(getActivity(), "Username already exists",
-//                                Toast.LENGTH_LONG).show();
-//                    }else{
-//
-//                        SQLiteDatabase query = dataHelper.getWritableDatabase();
-//                        query.execSQL("insert into users(username, password) values('" +
-//                                UserName + "','" +
-//
-//                                Password + "')");
-//                        Toast.makeText(getActivity(), "User created successfully! Please Login",
-//                                Toast.LENGTH_LONG).show();
-//
-//                        //User Logged in Successfully Launch You home screen activity
-////                        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-////                        startActivity(intent);
-////                        finish();
-//                    }
-//                }
-//  //          }
-//        });
 
+        if (checkView == 0 ){
+            textViewDangNhap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogLogin();
+                }
+            });
+        }
+
+
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
         //return inflater.inflate(R.layout.fragment_fifth, container, false);
         return view;
     }
 
     private void DialogLogin(){
+        Log.v(Constraints.TAG , "dfds" + this.getCheckUser());
         dataHelper = new DatabaseTest(getContext());
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_login);
@@ -147,8 +158,7 @@ public class FifthFragment extends Fragment {
                         userName = Username;
                         Toast.makeText(getActivity(), "Successfully Logged in",
                                 Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(getActivity(), FifthFragment.class);
-//                        startActivityForResult(intent, 10001);
+                        setCheckUser(1);
                         //User Logged in Successfully Launch You home screen activity
 
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -196,5 +206,50 @@ public class FifthFragment extends Fragment {
             valid = true;
         }
         return valid;
+    }
+
+    public int getCheckUser() {
+        return checkUser;
+    }
+
+    public void setCheckUser(int checkUser) {
+        this.checkUser = checkUser;
+    }
+    public void register(){
+        // register de sau lam
+//        textViewDangNhap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                if (validate()) {
+//                    String UserName = "huyhuy";
+//                    //String Email = "quangquang@gmail.com";
+//                    String Password = "123456";
+//
+//                    // Query check email
+//                    SQLiteDatabase db = dataHelper.getReadableDatabase();
+//                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'",null);
+//                    cursor.moveToFirst();
+//                    if (cursor.getCount()>0) {
+//                        //Email exists with email input provided so show error user already exist
+//                        Toast.makeText(getActivity(), "Username already exists",
+//                                Toast.LENGTH_LONG).show();
+//                    }else{
+//
+//                        SQLiteDatabase query = dataHelper.getWritableDatabase();
+//                        query.execSQL("insert into users(username, password) values('" +
+//                                UserName + "','" +
+//
+//                                Password + "')");
+//                        Toast.makeText(getActivity(), "User created successfully! Please Login",
+//                                Toast.LENGTH_LONG).show();
+//
+//                        //User Logged in Successfully Launch You home screen activity
+////                        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+////                        startActivity(intent);
+////                        finish();
+//                    }
+//                }
+//  //          }
+//        });
     }
 }

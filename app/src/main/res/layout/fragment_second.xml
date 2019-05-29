@@ -13,6 +13,7 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/textViewChiTieu"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Chi tiêu hiện tại:"
@@ -21,10 +22,13 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/layout_sum"
+
             android:gravity="center">
             <TextView
                 android:id="@+id/second_fragment_txt_tongtien"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:hint="0"
                 android:textColorHint="@color/textRoman"

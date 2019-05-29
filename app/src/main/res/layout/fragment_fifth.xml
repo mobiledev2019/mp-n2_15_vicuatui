@@ -17,16 +17,44 @@
         <TextView
             android:id="@+id/textViewDangNhap"
             android:layout_width="411dp"
-            android:layout_height="174dp"
-            android:layout_marginTop="100dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="27dp"
             android:padding="60sp"
             android:text="Đăng Nhập Hệ Thống"
             android:textSize="30dp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDangXuat"
+            android:layout_width="143dp"
+            android:layout_height="58dp"
+            android:layout_marginEnd="125dp"
+            android:text="Đăng xuất"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.465" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="43dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginBottom="290dp"
+            android:src="@drawable/icon_shutdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDangNhap" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
