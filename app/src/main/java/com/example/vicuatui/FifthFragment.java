@@ -34,7 +34,7 @@ import static android.content.ContentValues.TAG;
  * A simple {@link Fragment} subclass.
  */
 public class FifthFragment extends Fragment {
-    TextView textViewDangNhap , textViewDangXuat;
+    TextView textViewDangNhap , textViewDangXuat , textViewRegister;
     ImageView imageView3;
     static int checkView = 0;
     String userName;
@@ -93,6 +93,7 @@ public class FifthFragment extends Fragment {
                 if (getCheckUser() == 1){
                     Toast.makeText(getActivity() , "Đăng xuất thành công " , Toast.LENGTH_SHORT).show();
                     checkView = 0;
+                    setCheckUser(0);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
                 }
@@ -108,6 +109,7 @@ public class FifthFragment extends Fragment {
             textViewDangNhap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //register();
                     DialogLogin();
                 }
             });
@@ -128,6 +130,7 @@ public class FifthFragment extends Fragment {
 
 
         username = (EditText) dialog.findViewById(R.id.username);
+        textViewRegister = (TextView) dialog.findViewById(R.id.txtRegister);
 
         password = (EditText) dialog.findViewById(R.id.password);
         txtUsername = (TextInputLayout) dialog.findViewById(R.id.txtUsername);
@@ -136,6 +139,13 @@ public class FifthFragment extends Fragment {
         txtRegister = (TextView) dialog.findViewById(R.id.txtRegister);
 
         dataHelper = new DatabaseTest(getContext());
+
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +182,7 @@ public class FifthFragment extends Fragment {
                 }
             }
         });
+
 
         dialog.show();
 
@@ -217,39 +228,39 @@ public class FifthFragment extends Fragment {
     }
     public void register(){
         // register de sau lam
-//        textViewDangNhap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                if (validate()) {
-//                    String UserName = "huyhuy";
-//                    //String Email = "quangquang@gmail.com";
-//                    String Password = "123456";
-//
-//                    // Query check email
-//                    SQLiteDatabase db = dataHelper.getReadableDatabase();
-//                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'",null);
-//                    cursor.moveToFirst();
-//                    if (cursor.getCount()>0) {
-//                        //Email exists with email input provided so show error user already exist
-//                        Toast.makeText(getActivity(), "Username already exists",
-//                                Toast.LENGTH_LONG).show();
-//                    }else{
-//
-//                        SQLiteDatabase query = dataHelper.getWritableDatabase();
-//                        query.execSQL("insert into users(username, password) values('" +
-//                                UserName + "','" +
-//
-//                                Password + "')");
-//                        Toast.makeText(getActivity(), "User created successfully! Please Login",
-//                                Toast.LENGTH_LONG).show();
-//
-//                        //User Logged in Successfully Launch You home screen activity
-////                        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-////                        startActivity(intent);
-////                        finish();
-//                    }
-//                }
-//  //          }
-//        });
+        textViewDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (validate()) {
+                    String UserName = "huyhuy";
+                    //String Email = "quangquang@gmail.com";
+                    String Password = "123456";
+
+                    // Query check email
+                    SQLiteDatabase db = dataHelper.getReadableDatabase();
+                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'",null);
+                    cursor.moveToFirst();
+                    if (cursor.getCount()>0) {
+                        //Email exists with email input provided so show error user already exist
+                        Toast.makeText(getActivity(), "Username already exists",
+                                Toast.LENGTH_LONG).show();
+                    }else{
+
+                        SQLiteDatabase query = dataHelper.getWritableDatabase();
+                        query.execSQL("insert into users(username, password) values('" +
+                                UserName + "','" +
+
+                                Password + "')");
+                        Toast.makeText(getActivity(), "User created successfully! Please Login",
+                                Toast.LENGTH_LONG).show();
+
+                        //User Logged in Successfully Launch You home screen activity
+//                        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+//                        startActivity(intent);
+//                        finish();
+                    }
+                }
+  //          }
+        });
     }
 }
