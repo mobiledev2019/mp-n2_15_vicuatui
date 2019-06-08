@@ -63,6 +63,7 @@ public class ThirdFragment extends Fragment {
     Spinner spinner_hang_muc;
     Button btnGhi, btnDatePicker;
     private TextInputLayout inputLayoutDienDai, inputLayoutTien, inputLayoutNgayThang;
+    FifthFragment fifthFragment;
 
     AwesomeValidation awesomeValidation;
 
@@ -187,6 +188,13 @@ public class ThirdFragment extends Fragment {
         mYear = c.get(Calendar.YEAR);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txt_ngay_thang.setText(sdf.format(c.getTime()));
+        fifthFragment = new FifthFragment();
+        if (fifthFragment.getCheckUser() == 1){
+            btnGhi.setEnabled(true);
+        }
+        else {
+            btnGhi.setEnabled(false);
+        }
 
         btnGhi.setOnClickListener(new View.OnClickListener() {
             @Override

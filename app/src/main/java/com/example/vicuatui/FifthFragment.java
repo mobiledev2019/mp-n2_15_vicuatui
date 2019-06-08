@@ -2,15 +2,12 @@ package com.example.vicuatui;
 
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.constraint.Constraints;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -25,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 
 import static android.content.ContentValues.TAG;
 
@@ -34,18 +30,21 @@ import static android.content.ContentValues.TAG;
  * A simple {@link Fragment} subclass.
  */
 public class FifthFragment extends Fragment {
-    TextView textViewDangNhap , textViewDangXuat , textViewRegister;
+    TextView textViewDangNhap, textViewDangXuat, textViewRegister;
     ImageView imageView3;
     static int checkView = 0;
+    static String session_id = null ;
+    Button check_test;
     String userName;
     Cursor cursor; //Declaration Cursor
     EditText username, password; //Declaration Edit
     TextInputLayout txtUsername, txtPassword; //Declaration TextInputLayout
     Button buttonLogin; //Declaration Button
-    SharedPreferences pref,sharedpreferences;    //Declaration SharedPreferences
+    SharedPreferences sharedpreferences , preferences;
     DatabaseTest dataHelper; //Declaration SqliteHelper
     TextView txtRegister;
     public static int checkUser = 0;
+
 
     public FifthFragment() {
         // Required empty public constructor
@@ -59,25 +58,36 @@ public class FifthFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_fifth, container, false);
 
-        textViewDangNhap = (TextView)view.findViewById(R.id.textViewDangNhap);
-        textViewDangXuat = (TextView)view.findViewById(R.id.textViewDangXuat);
-        imageView3 = (ImageView)view.findViewById(R.id.imageView3);
+        textViewDangNhap = (TextView) view.findViewById(R.id.textViewDangNhap);
+        textViewDangXuat = (TextView) view.findViewById(R.id.textViewDangXuat);
+        imageView3 = (ImageView) view.findViewById(R.id.imageView3);
+        check_test =(Button) view.findViewById(R.id.check_test);
+        check_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkView = 1;
+                setCheckUser(1);
+                textViewDangNhap.setText("Xin chào :" + "huyhuy");
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+            }
+        });
 
 
-        if (checkView == 0){
+
+        if (checkView == 0) {
             textViewDangXuat.setVisibility(View.INVISIBLE);
             imageView3.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             textViewDangXuat.setVisibility(View.VISIBLE);
             imageView3.setVisibility(View.VISIBLE);
         }
 
         dataHelper = new DatabaseTest(getContext());
-        if (checkView == 1){
-            textViewDangNhap.setText("Xin chào :" + userName);
-        }
-        else {
+        if (checkView == 1) {
+           // textViewDangNhap.setText("Xin chào :" + userName);
+            textViewDangNhap.setText("Xin chào :" + "huyhuy");
+        } else {
             textViewDangNhap.setText("Đăng Nhập Hệ Thống");
         }
 
@@ -90,22 +100,26 @@ public class FifthFragment extends Fragment {
 
 //                FragmentTransaction ft = getFragmentManager().beginTransaction();
 //                ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
-                if (getCheckUser() == 1){
-                    Toast.makeText(getActivity() , "Đăng xuất thành công " , Toast.LENGTH_SHORT).show();
+                if (getCheckUser() == 1) {
+                    Toast.makeText(getActivity(), "Đăng xuất thành công ", Toast.LENGTH_SHORT).show();
                     checkView = 0;
                     setCheckUser(0);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
-                }
-                else {
-                    Toast.makeText(getActivity() , "Xin vui lòng đăng nhập " , Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Xin vui lòng đăng nhập ", Toast.LENGTH_SHORT).show();
+
                 }
 
 
             }
         });
 
-        if (checkView == 0 ){
+        if (checkView == 0) {
             textViewDangNhap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,6 +128,18 @@ public class FifthFragment extends Fragment {
                 }
             });
         }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        session_id =  sharedPreferences.getString("session",null);
+        if(session_id!=null){
+            checkView = 1;
+            setCheckUser(1);
+            textViewDangNhap.setText("Xin chào :" + "huyhuy");
+            Log.d(TAG , "sesseion       " + session_id);
+        }
+        else {
+            Log.d(TAG , "sessesdsaion" + session_id);
+        }
+
 
 
 //        FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -122,11 +148,14 @@ public class FifthFragment extends Fragment {
         return view;
     }
 
-    private void DialogLogin(){
-        Log.v(Constraints.TAG , "dfds" + this.getCheckUser());
+    private void DialogLogin() {
+
+        Log.v(Constraints.TAG, "dfds" + this.getCheckUser());
         dataHelper = new DatabaseTest(getContext());
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_login);
+
+
 
 
         username = (EditText) dialog.findViewById(R.id.username);
@@ -160,10 +189,14 @@ public class FifthFragment extends Fragment {
                     String Password = password.getText().toString();
                     // Query check email dan password
                     SQLiteDatabase db = dataHelper.getReadableDatabase();
-                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + Username + "' AND password ='"+Password+"'",null);
+                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + Username + "' AND password ='" + Password + "'", null);
                     cursor.moveToFirst();
-                    if (cursor.getCount()>0) {
-                        Log.v(TAG , "la : " + Username);
+                    if (cursor.getCount() > 0) {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("session", cursor.getString(0).toString());
+                        editor.commit();
+                        Log.v(TAG, "la : " + Username);
                         checkView = 1;
                         userName = Username;
                         Toast.makeText(getActivity(), "Successfully Logged in",
@@ -173,15 +206,17 @@ public class FifthFragment extends Fragment {
 
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+
                         dialog.cancel();
 //                        finish();
-                    }else{
+                    } else {
                         Toast.makeText(getActivity(), "Failed to log in , please try again",
                                 Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
+
 
 
         dialog.show();
@@ -198,10 +233,10 @@ public class FifthFragment extends Fragment {
         String Password = password.getText().toString();
 
         //Handling validation for Password field
-        if(Username.isEmpty()) {
+        if (Username.isEmpty()) {
             valid = false;
             txtUsername.setError("Please enter valid Username!");
-        }else {
+        } else {
             valid = true;
             txtUsername.setError(null);
         }
@@ -226,41 +261,42 @@ public class FifthFragment extends Fragment {
     public void setCheckUser(int checkUser) {
         this.checkUser = checkUser;
     }
-    public void register(){
+
+    public void register() {
         // register de sau lam
         textViewDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                if (validate()) {
-                    String UserName = "huyhuy";
-                    //String Email = "quangquang@gmail.com";
-                    String Password = "123456";
+                String UserName = "huyhuy";
+                //String Email = "quangquang@gmail.com";
+                String Password = "123456";
 
-                    // Query check email
-                    SQLiteDatabase db = dataHelper.getReadableDatabase();
-                    cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'",null);
-                    cursor.moveToFirst();
-                    if (cursor.getCount()>0) {
-                        //Email exists with email input provided so show error user already exist
-                        Toast.makeText(getActivity(), "Username already exists",
-                                Toast.LENGTH_LONG).show();
-                    }else{
+                // Query check email
+                SQLiteDatabase db = dataHelper.getReadableDatabase();
+                cursor = db.rawQuery("SELECT id FROM users WHERE username = '" + UserName + "'", null);
+                cursor.moveToFirst();
+                if (cursor.getCount() > 0) {
+                    //Email exists with email input provided so show error user already exist
+                    Toast.makeText(getActivity(), "Username already exists",
+                            Toast.LENGTH_LONG).show();
+                } else {
 
-                        SQLiteDatabase query = dataHelper.getWritableDatabase();
-                        query.execSQL("insert into users(username, password) values('" +
-                                UserName + "','" +
+                    SQLiteDatabase query = dataHelper.getWritableDatabase();
+                    query.execSQL("insert into users(username, password) values('" +
+                            UserName + "','" +
 
-                                Password + "')");
-                        Toast.makeText(getActivity(), "User created successfully! Please Login",
-                                Toast.LENGTH_LONG).show();
+                            Password + "')");
+                    Toast.makeText(getActivity(), "User created successfully! Please Login",
+                            Toast.LENGTH_LONG).show();
 
-                        //User Logged in Successfully Launch You home screen activity
+                    //User Logged in Successfully Launch You home screen activity
 //                        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
 //                        startActivity(intent);
 //                        finish();
-                    }
                 }
-  //          }
+            }
+            //          }
         });
     }
 }

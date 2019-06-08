@@ -1,12 +1,15 @@
 package com.example.vicuatui;
 
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,10 +56,14 @@ public class SecondFragment extends Fragment {
         if (fifthFragment.getCheckUser() == 1){
             addControl(view);
             readData();
+            /*FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();*/
         }
         else {
             textViewChiTieu.setText("Xin vui lòng đăng nhập");
         }
+        /*FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();*/
 
 
         return view;
@@ -67,10 +74,12 @@ public class SecondFragment extends Fragment {
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
+
         txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
         linearLayoutSum = (LinearLayout) view.findViewById(R.id.layout_sum);
         txvTongTien.setText(sum());
-
+        txvTongTien.refreshDrawableState();
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -89,6 +98,8 @@ public class SecondFragment extends Fragment {
             list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
         }
         adapter.notifyDataSetChanged();
+        /*FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();*/
     }
 
     private String sum(){

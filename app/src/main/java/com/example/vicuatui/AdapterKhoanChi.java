@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -61,6 +62,7 @@ public class AdapterKhoanChi extends BaseAdapter {
         TextView txt_so_tien = (TextView) row.findViewById(R.id.txt_so_tien);
         Button btn_sua = (Button) row.findViewById(R.id.btn_sua);
         Button btn_xoa = (Button) row.findViewById(R.id.btn_xoa);
+        fifthFragment = new FifthFragment();
 
         final KhoanChi khoanChi = (KhoanChi) list.get(position);
         txt_hang_muc.setText(khoanChi.hangMuc);
@@ -105,6 +107,10 @@ public class AdapterKhoanChi extends BaseAdapter {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+//                FragmentTransaction ft = fifthFragment.getFragmentManager().beginTransaction();
+//                ft.detach(R.layout.listview_row).attach(fifthFragment).commit();
+
+
             }
         });
         return row;
