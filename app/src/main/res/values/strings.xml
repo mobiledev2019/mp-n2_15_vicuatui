@@ -33,8 +33,12 @@
     <string name="txt_ngay_thang">Cá nhân</string>
 
     <string name="success">Thanh cong</string>
-
-
+    <string-array name="tab_2__search">
+        <item>Tất cả</item>
+        <item>Hôm nay</item>
+        <item>Tháng này</item>
+        <item>Năm này</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
