@@ -42,6 +42,25 @@ public class SecondFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         addControl(view);
         readData();
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                txvTongTien.setText(sum());
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) { }
+            }
+        };
+
+        t.start();
         return view;
     }
 
@@ -50,8 +69,6 @@ public class SecondFragment extends Fragment {
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
-        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
-        txvTongTien.setText(sum());
     }
 
     private void readData() {
