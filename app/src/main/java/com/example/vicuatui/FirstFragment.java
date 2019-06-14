@@ -30,7 +30,7 @@ public class FirstFragment extends Fragment {
     private SharedPreferences mPreferences;
 
     private String sharedPrefFile =
-            "com.example.android.vicuatui";
+            "limit_number";
 
     public FirstFragment() {
         // Required empty public constructor
