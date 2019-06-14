@@ -1,6 +1,8 @@
 package com.example.vicuatui;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -31,6 +33,11 @@ public class SecondFragment extends Fragment {
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
 
+    private SharedPreferences mPreferences;
+
+    private String sharedPrefFile =
+            "total_number";
+
     public SecondFragment() {
         // Required empty public constructor
     }
@@ -40,18 +47,19 @@ public class SecondFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
         addControl(view);
         readData();
         return view;
     }
 
     public void addControl(View view) {
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+        txvTongTien.setText(sum());
         listView = view.findViewById(R.id.listview);
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
-        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
-        txvTongTien.setText(sum());
     }
 
     private void readData() {
