@@ -62,16 +62,17 @@ public class FifthFragment extends Fragment {
         textViewDangXuat = (TextView) view.findViewById(R.id.textViewDangXuat);
         imageView3 = (ImageView) view.findViewById(R.id.imageView3);
         check_test =(Button) view.findViewById(R.id.check_test);
-        check_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkView = 1;
-                setCheckUser(1);
-                textViewDangNhap.setText("Xin chào :" + "huyhuy");
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
-            }
-        });
+        check_test.setVisibility(View.GONE);
+//        check_test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                checkView = 1;
+//                setCheckUser(1);
+//                textViewDangNhap.setText("Xin chào :" + "huyhuy");
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+//            }
+//        });
 
 
 

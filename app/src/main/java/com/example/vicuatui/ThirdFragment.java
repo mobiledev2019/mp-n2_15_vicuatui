@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -67,7 +69,13 @@ public class ThirdFragment extends Fragment {
 
     AwesomeValidation awesomeValidation;
 
+    private SharedPreferences mPreferencesTotalNumber;
+    private SharedPreferences mPreferencesLimitNumber;
 
+    private String sharedPrefFileTotalNumber =
+            "total_number";
+    private String sharedPrefFileLimitNumber =
+            "limit_number";
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -79,6 +87,9 @@ public class ThirdFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_third, container, false);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+        mPreferencesTotalNumber = this.getActivity().getSharedPreferences(sharedPrefFileTotalNumber, Context.MODE_PRIVATE);
+        mPreferencesLimitNumber = this.getActivity().getSharedPreferences(sharedPrefFileLimitNumber, Context.MODE_PRIVATE);
 
         addControls(view);
         bundle = this.getArguments();
@@ -194,6 +205,7 @@ public class ThirdFragment extends Fragment {
         }
         else {
             btnGhi.setEnabled(false);
+            Toast.makeText(getActivity() , "Xin vui lòng đăng nhập " , Toast.LENGTH_SHORT).show();
         }
 
         btnGhi.setOnClickListener(new View.OnClickListener() {
@@ -207,10 +219,19 @@ public class ThirdFragment extends Fragment {
                             }
                         }
                         else {
-                            saveData();
+                            int total = mPreferencesTotalNumber.getInt("TOTAL_NUMBER",0) + Integer.parseInt(txt_so_tien.getText() + "");
+                            System.out.println("total");
+                            System.out.println(total);
+                            int limit = mPreferencesLimitNumber.getInt("NUMBER_OF_LIMIT",0);
+                            System.out.println("limit");
+                            System.out.println(limit);
+                            if (total < limit) {
+                                saveData();
+                            } else {
+                                Toast.makeText(getActivity(), "Bạn đã chi tiêu quá hạn mức!", Toast.LENGTH_LONG).show();
+                            }
                         }
-                            Toast.makeText(getActivity() , "Data receove success" , Toast.LENGTH_SHORT).show();
-                        }
+                    }
                 }
         });
 
