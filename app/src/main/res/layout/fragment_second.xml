@@ -38,10 +38,16 @@
                 />
         </LinearLayout>
     </LinearLayout>
+    <Spinner
+        android:id="@+id/third_fragment__spinner_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:entries="@array/tab_2__search"/>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_weight="4.5" />
 </LinearLayout>
