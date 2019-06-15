@@ -59,18 +59,22 @@ public class SecondFragment extends Fragment {
         textViewChiTieu = (TextView) view.findViewById(R.id.textViewChiTieu);
         spinner_search = view.findViewById(R.id.third_fragment__spinner_search);
         mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
        // addControl(view);
+        addControl(view);
+        //readData();
 
+        getTime();
         if (fifthFragment.getCheckUser() == 1){
             spinner_search.setVisibility(View.VISIBLE);
-            addControl(view);
-            //readData();
 
-            getTime();
+
+
         }
         else {
             textViewChiTieu.setText("Xin vui lòng đăng nhập");
             spinner_search.setVisibility(View.GONE);
+            txvTongTien.setText("0");
 
         }
         return view;
