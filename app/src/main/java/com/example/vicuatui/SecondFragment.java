@@ -40,6 +40,7 @@ public class SecondFragment extends Fragment {
     AdapterKhoanChi adapter;
     FifthFragment fifthFragment;
 
+
     public SecondFragment() {
         // Required empty public constructor
     }
@@ -50,17 +51,25 @@ public class SecondFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         fifthFragment = new FifthFragment();
+        adapter = new AdapterKhoanChi();
         textViewChiTieu = (TextView) view.findViewById(R.id.textViewChiTieu);
 
         Log.v(TAG , "checkUser" + fifthFragment.getCheckUser());
+
         if (fifthFragment.getCheckUser() == 1){
             addControl(view);
             readData();
+
             /*FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();*/
         }
         else {
             textViewChiTieu.setText("Xin vui lòng đăng nhập");
+        }
+        if (adapter.getFresh_second() == 1){
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();
+            adapter.setFresh_second(0);
         }
         /*FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(SecondFragment.this).attach(SecondFragment.this).commit();*/

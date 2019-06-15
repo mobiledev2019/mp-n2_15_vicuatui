@@ -56,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
                         serFregment(fourthFragment);
                         return true;
                     case R.id.nav_fifth:
-//                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                        FifthFragment fifthFragment2 = new FifthFragment();
-//                        fragmentTransaction.detach(fifthFragment2).attach(fifthFragment2);
-//                        fragmentTransaction.commit();
+//                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                        ft.detach(FifthFragment.this).attach(FifthFragment.this).commit();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.detach(fifthFragment).attach(fifthFragment).commit();
+
                         serFregment(fifthFragment);
                         return true;
                         default:
