@@ -66,6 +66,10 @@ public class SecondFragment extends Fragment {
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
+        int total_number = (int) Double.parseDouble(sum());
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt("TOTAL_NUMBER", total_number);
+        preferencesEditor.apply();
     }
     private void getTime() {
         spinner_search.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
