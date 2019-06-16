@@ -114,19 +114,23 @@ public class SecondFragment extends Fragment {
             String dienGiai = cursor.getString(3);
             String ngayThang = cursor.getString(4);
             byte[] anhHangMuc = cursor.getBlob(5);
+            if (time.equals("Tất cả")) {
+                list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+            }
             if (time.length() > 8 && time.equals(ngayThang)) {
                 System.out.println("day");
                 list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
             }
             else {
                 if (time.length() > 5 && time.equals(ngayThang.substring(3,ngayThang.length()))) {
+                    System.out.println("thang");
                     list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
                 }
                 else {
                     if (time.length() <= 5 && time.equals(ngayThang.substring(6,ngayThang.length()))) {
+                        System.out.println("nam");
                         list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
                     }
-                    else list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
                 }
             }
 
