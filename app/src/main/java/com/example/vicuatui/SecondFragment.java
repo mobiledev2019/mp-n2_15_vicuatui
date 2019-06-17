@@ -43,6 +43,8 @@ public class SecondFragment extends Fragment {
     private String sharedPrefFile =
             "total_number";
 
+    double total_number_with_filter = 0;
+
     public SecondFragment() {
         // Required empty public constructor
     }
@@ -119,26 +121,34 @@ public class SecondFragment extends Fragment {
             String ngayThang = cursor.getString(4);
             byte[] anhHangMuc = cursor.getBlob(5);
             if (time.equals("Tất cả")) {
+                total_number_with_filter += soTien;
                 list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
             }
             if (time.length() > 8 && time.equals(ngayThang)) {
                 System.out.println("day");
+                total_number_with_filter += soTien;
+                System.out.println(total_number_with_filter);
                 list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
             }
             else {
                 if (time.length() > 5 && time.equals(ngayThang.substring(3,ngayThang.length()))) {
                     System.out.println("thang");
+                    total_number_with_filter += soTien;
+                    System.out.println(total_number_with_filter);
                     list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
                 }
                 else {
                     if (time.length() <= 5 && time.equals(ngayThang.substring(6,ngayThang.length()))) {
                         System.out.println("nam");
+                        total_number_with_filter += soTien;
                         list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
                     }
                 }
             }
-
         }
+
+        txvTongTien.setText(total_number_with_filter + "");
+        total_number_with_filter = 0;
         adapter.notifyDataSetChanged();
     }
 
