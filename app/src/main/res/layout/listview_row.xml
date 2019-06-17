@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/img_hang_muc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             tools:src="@tools:sample/avatars" />
     </LinearLayout>
 
@@ -23,25 +23,33 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_hang_muc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hang Muc"/>
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"
+            android:text="Hạng Mức"/>
 
         <TextView
             android:id="@+id/txt_dien_giai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dien Giai" />
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:text="Diễn giải" />
 
         <TextView
             android:id="@+id/txt_ngay_thang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ngay Thang" />
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:text="Ngày Tháng" />
 
     </LinearLayout>
 
@@ -55,7 +63,10 @@
             android:id="@+id/txt_so_tien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="So Tien" />
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:text="Số tiền" />
 
     </LinearLayout>
 
@@ -63,19 +74,20 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_sua"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sua" />
+            android:text="Sửa" />
 
         <Button
             android:id="@+id/btn_xoa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xoa" />
+            android:text="Xóa" />
     </LinearLayout>
 
 </LinearLayout>

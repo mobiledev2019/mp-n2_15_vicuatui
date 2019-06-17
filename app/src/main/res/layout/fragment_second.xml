@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:weightSum="6"
     tools:context=".SecondFragment" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textViewChiTieu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Chi tiêu hiện tại:"
+            android:textColorHint="@color/textRoman"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_sum"
+
+            android:gravity="center">
+            <TextView
+                android:id="@+id/second_fragment_txt_tongtien"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:hint="0"
+                android:textColorHint="@color/textRoman"
+                android:textSize="48sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="đ"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/third_fragment__spinner_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:entries="@array/tab_2__search"/>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="4.5" />
+</LinearLayout>

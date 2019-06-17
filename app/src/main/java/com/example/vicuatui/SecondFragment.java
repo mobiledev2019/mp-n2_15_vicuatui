@@ -1,6 +1,8 @@
 package com.example.vicuatui;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,10 +12,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.graphics.Color.*;
 
@@ -26,8 +32,20 @@ public class SecondFragment extends Fragment {
     SQLiteDatabase database;
 
     ListView listView;
+    TextView txvTongTien;
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
+    FifthFragment fifthFragment;
+    TextView textViewChiTieu;
+
+    Spinner spinner_search;
+
+    private SharedPreferences mPreferences;
+
+    private String sharedPrefFile =
+            "total_number";
+
+    double total_number_with_filter = 0;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -37,20 +55,81 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        fifthFragment = new FifthFragment();
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        textViewChiTieu = (TextView) view.findViewById(R.id.textViewChiTieu);
+        spinner_search = view.findViewById(R.id.third_fragment__spinner_search);
+        mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+       // addControl(view);
         addControl(view);
-        readData();
+        //readData();
+
+        getTime();
+        if (fifthFragment.getCheckUser() == 1){
+            spinner_search.setVisibility(View.VISIBLE);
+
+
+
+        }
+        else {
+            textViewChiTieu.setText("Xin vui lòng đăng nhập");
+            spinner_search.setVisibility(View.GONE);
+            txvTongTien.setText("0");
+
+        }
         return view;
     }
 
     public void addControl(View view) {
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+        txvTongTien.setText(sum());
         listView = view.findViewById(R.id.listview);
         list = new ArrayList<>();
         adapter = new AdapterKhoanChi(getActivity(), list);
         listView.setAdapter(adapter);
+        int total_number = (int) Double.parseDouble(sum());
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt("TOTAL_NUMBER", total_number);
+        preferencesEditor.apply();
     }
+    private void getTime() {
+        spinner_search.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Calendar calendar = Calendar.getInstance();
+                int date = calendar.get(Calendar.DATE);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                int year = calendar.get(Calendar.YEAR);
 
-    private void readData() {
+                String sDate = date + "", sMonth = month + "", sYear="";
+                if(date < 10)  sDate = "0" + date;
+                if(month < 10) sMonth = "0" + month;
+                sYear = year + "";
+                String time = "";
+
+                String selectItem = spinner_search.getSelectedItem().toString();
+                if(selectItem.equalsIgnoreCase("Hôm nay")) {
+                    time = sDate + "/" + sMonth + "/"+ sYear;
+                } else if(selectItem.equalsIgnoreCase("Tháng này")) {
+                    time = sMonth + "/" + sYear;
+                } else if(selectItem.equalsIgnoreCase("Năm này")) {
+                    time = sYear;
+                } else if (selectItem.equalsIgnoreCase("Tất cả")) {
+                    time = "Tất cả";
+                }
+                readData(time);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    };
+
+    private void readData(String time) {
         database = (SQLiteDatabase) Database.initDatabase(getActivity(), DATABASE_NAME);
         Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi", null);
         list.clear();
@@ -62,8 +141,46 @@ public class SecondFragment extends Fragment {
             String dienGiai = cursor.getString(3);
             String ngayThang = cursor.getString(4);
             byte[] anhHangMuc = cursor.getBlob(5);
-            list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+            if (time.equals("Tất cả")) {
+                total_number_with_filter += soTien;
+                list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+            }
+            if (time.length() > 8 && time.equals(ngayThang)) {
+                System.out.println("day");
+                total_number_with_filter += soTien;
+                System.out.println(total_number_with_filter);
+                list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+            }
+            else {
+                if (time.length() > 5 && time.equals(ngayThang.substring(3,ngayThang.length()))) {
+                    System.out.println("thang");
+                    total_number_with_filter += soTien;
+                    System.out.println(total_number_with_filter);
+                    list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+                }
+                else {
+                    if (time.length() <= 5 && time.equals(ngayThang.substring(6,ngayThang.length()))) {
+                        System.out.println("nam");
+                        total_number_with_filter += soTien;
+                        list.add(new KhoanChi(id, soTien, hangMuc, dienGiai, ngayThang, anhHangMuc));
+                    }
+                }
+            }
         }
+
+        txvTongTien.setText(total_number_with_filter + "");
+        total_number_with_filter = 0;
         adapter.notifyDataSetChanged();
+    }
+
+    private String sum(){
+        double tongTien = 0;
+        SQLiteDatabase database = Database.initDatabase(getActivity(), "VicuatuiBDv1.db");
+        Cursor cursor = database.rawQuery("SELECT * FROM KhoanChi", null);
+        while (cursor.moveToNext()) {
+            double soTien = cursor.getDouble(1);
+            tongTien += soTien;
+        }
+        return tongTien + "";
     }
 }

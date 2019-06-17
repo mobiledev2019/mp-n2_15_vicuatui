@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +29,20 @@ import java.util.ArrayList;
 public class AdapterKhoanChi extends BaseAdapter {
     Activity context;
     ArrayList list;
+    FifthFragment fifthFragment;
+    SecondFragment secondFragment;
+    private static int fresh_second = 0;
+
+    public static int getFresh_second() {
+        return fresh_second;
+    }
+
+    public static void setFresh_second(int fresh_second) {
+        AdapterKhoanChi.fresh_second = fresh_second;
+    }
+
+    public AdapterKhoanChi() {
+    }
 
     public AdapterKhoanChi(Activity context, ArrayList list) {
         this.context = context;
@@ -51,6 +66,7 @@ public class AdapterKhoanChi extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.listview_row, null);
         ImageView img_hang_muc = (ImageView) row.findViewById(R.id.img_hang_muc);
@@ -60,6 +76,8 @@ public class AdapterKhoanChi extends BaseAdapter {
         TextView txt_so_tien = (TextView) row.findViewById(R.id.txt_so_tien);
         Button btn_sua = (Button) row.findViewById(R.id.btn_sua);
         Button btn_xoa = (Button) row.findViewById(R.id.btn_xoa);
+        fifthFragment = new FifthFragment();
+        secondFragment = new SecondFragment();
 
         final KhoanChi khoanChi = (KhoanChi) list.get(position);
         txt_hang_muc.setText(khoanChi.hangMuc);
@@ -67,8 +85,8 @@ public class AdapterKhoanChi extends BaseAdapter {
         txt_ngay_thang.setText(khoanChi.ngayThang);
         txt_so_tien.setText(khoanChi.soTien + "");
 
-//        Bitmap bmHinhDaiDien = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
-//        img_hang_muc.setImageBitmap(bmHinhDaiDien);
+        Bitmap bmAnhHangMuc = BitmapFactory.decodeByteArray(khoanChi.anhHangMuc, 0 , khoanChi.anhHangMuc.length);
+        img_hang_muc.setImageBitmap(bmAnhHangMuc);
 
         btn_sua.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +112,9 @@ public class AdapterKhoanChi extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteData(khoanChi.ID);
+                        setFresh_second(1);
+//                FragmentTransaction ft = secondFragment.getFragmentManager().beginTransaction();
+//                ft.detach(secondFragment).attach(secondFragment).commit();
                     }
                 });
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -104,6 +125,10 @@ public class AdapterKhoanChi extends BaseAdapter {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+//                FragmentTransaction ft = secondFragment.getFragmentManager().beginTransaction();
+//                ft.detach(secondFragment).attach(secondFragment).commit();
+
+
             }
         });
         return row;
