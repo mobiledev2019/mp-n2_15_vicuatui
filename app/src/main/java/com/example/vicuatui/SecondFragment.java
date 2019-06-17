@@ -35,6 +35,8 @@ public class SecondFragment extends Fragment {
     TextView txvTongTien;
     ArrayList<KhoanChi> list;
     AdapterKhoanChi adapter;
+    FifthFragment fifthFragment;
+    TextView textViewChiTieu;
 
     Spinner spinner_search;
 
@@ -51,11 +53,30 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        fifthFragment = new FifthFragment();
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
-        addControl(view);
+        textViewChiTieu = (TextView) view.findViewById(R.id.textViewChiTieu);
         spinner_search = view.findViewById(R.id.third_fragment__spinner_search);
+        mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        txvTongTien = view.findViewById(R.id.second_fragment_txt_tongtien);
+       // addControl(view);
+        addControl(view);
+        //readData();
+
         getTime();
+        if (fifthFragment.getCheckUser() == 1){
+            spinner_search.setVisibility(View.VISIBLE);
+
+
+
+        }
+        else {
+            textViewChiTieu.setText("Xin vui lòng đăng nhập");
+            spinner_search.setVisibility(View.GONE);
+            txvTongTien.setText("0");
+
+        }
         return view;
     }
 

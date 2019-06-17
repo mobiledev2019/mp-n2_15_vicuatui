@@ -19,7 +19,7 @@
     <string name="tab_1__section_1_date">Date</string>
     <string name="tab_1__section_2_button_1">Thêm chi tiết</string>
     <string name="tab_1__section_2_button_2">Ghi</string>
-    <string name="tab_1__section_2_button_3">Chụp hóa đơn</string>
+    <!--<string name="tab_1__section_2_button_3">Chụp hóa đơn</string>-->
     <string name="Home">home</string>
     <string name="nav_first">Tổng quan</string>
     <string name="nav_second">Tài Khoản</string>

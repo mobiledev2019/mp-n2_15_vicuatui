@@ -187,13 +187,13 @@
 
             <TextView
                 android:id="@+id/third_fragment__txv_add_bill"
-                android:layout_width="wrap_content"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_weight="1"
 
                 android:paddingTop="20dp"
-                android:text="@string/tab_1__section_2_button_3"
+                android:text="Chụp hóa đơn"
                 android:textColor="@color/textPictonBlue" />
             <ImageView
                 android:id="@+id/third_fragment_img_folder"

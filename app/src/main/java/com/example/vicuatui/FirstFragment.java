@@ -25,7 +25,10 @@ import android.widget.Toast;
 public class FirstFragment extends Fragment {
     EditText edt_number_of_limit;
     Button btn_save;
+    TextView textview_gioihanchi , txt_gioihansochi;
+
     TextView txt_number_of_limit;
+    FifthFragment fifthFragment;
 
     private SharedPreferences mPreferences;
 
@@ -41,13 +44,28 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        fifthFragment = new FifthFragment();
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         edt_number_of_limit = view.findViewById(R.id.edt_number_of_limit);
         btn_save = view.findViewById(R.id.first_fragment__btn_save);
+        textview_gioihanchi = view.findViewById(R.id.textview_gioihanchi);
+        txt_gioihansochi = view.findViewById(R.id.txt_gioihansochi);
         txt_number_of_limit = view.findViewById(R.id.txt_number_of_limit);
+        if (fifthFragment.getCheckUser() == 1 ){
+            mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+            addControls();
+        }
+        else {
+            edt_number_of_limit.setVisibility(View.GONE);
+            btn_save.setVisibility(View.GONE);
+            txt_number_of_limit.setVisibility(View.GONE);
+            txt_gioihansochi.setVisibility(View.GONE);
+            textview_gioihanchi.setText("Xin Vui Lòng Đăng Nhập");
 
-        mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
-        addControls();
+        }
+
+
+
         return view;
     }
 

@@ -6,15 +6,17 @@
     android:weightSum="10"
     android:orientation="vertical"
     tools:context=".FirstFragment">
+
     <TextView
+        android:id="@+id/textview_gioihanchi"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/backgroundAthensGray"
         android:gravity="center"
         android:text="Giới hạn chi"
-        android:textSize="28sp"
         android:textColor="@color/textPictonBlue"
-        android:background="@color/backgroundAthensGray"/>
+        android:textSize="28sp" />
     <TextView
         android:id="@+id/txt_number_of_limit"
         android:layout_width="match_parent"
@@ -25,7 +27,7 @@
         android:textSize="24sp"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_gioihansochi"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -47,4 +49,5 @@
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:text="Save"/>
+
 </LinearLayout>
